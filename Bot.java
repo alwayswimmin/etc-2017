@@ -89,7 +89,24 @@ public class Bot
 	}
 
 	public static String intToName(int i) {
-		return null;
+		switch(i) {
+			case 0:
+				return "BOND";
+			case 1:
+				return "VALBZ";
+			case 2:
+				return "VALE";
+			case 3:
+				return "GS";
+			case 4:
+				return "MS";
+			case 5:
+				return "WFC";
+			case 6:
+				return "XLF";
+			default:
+				return "";
+		}
 	}
 
 	public static void handleIncomingMessages() throws IOException {
