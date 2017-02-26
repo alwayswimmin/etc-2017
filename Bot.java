@@ -158,7 +158,9 @@ public class Bot
 							min_sell = x;
 						}
 					}
-					mid[asset] = (max_buy + min_sell) / 2.0;
+					if(max_buy > 0 && min_sell < Integer.MAX_VALUE) {
+						mid[asset] = (max_buy + min_sell) / 2.0;
+					}
 					break;
 				case "FILL":
 					System.err.printf("The exchange replied: %s\n", message);
