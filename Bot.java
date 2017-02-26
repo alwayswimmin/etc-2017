@@ -239,24 +239,26 @@ public class Bot
 		
  		if(levels[nameToInt("VALE")] != 10 || levels[nameToInt("VALE")] != -10 && levels[nameToInt("VALBZ")] != 10 || levels[nameToInt("VALBZ")] != -10){
  			if(mBuy[nameToInt("VALE")] > 1+  mSell[nameToInt("VALBZ")]){
- 				to_exchange.println("ADD " + identifier + " VALE SELL" + 10);
- 				to_exchange.println("ADD " + identifier + " VALBZ BUY" + 10);
+ 				num_to_trade = Math.min(10-levels[nameToInt("VALBZ")], 10+levels[nameToInt("VALE")]);
+ 				to_exchange.println("ADD " + identifier + " VALE SELL " + num_to_trade);
+ 				to_exchange.println("ADD " + identifier + " VALBZ BUY " + num_to_trade);
  			}
  			
  			if(mBuy[nameToInt("VALBZ")] > 1 + mSell[nameToInt("VALBZ")]){
- 				to_exchange.println("ADD " + identifier + " VALBZ SELL" + 10);
- 				to_exchange.println("ADD " + identifier + " VALE BUY" + 10);
+ 				num_to_trade = Math.min(10-levels[nameToInt("VALE")], 10+levels[nameToInt("VALBZ")]);
+ 				to_exchange.println("ADD " + identifier + " VALBZ SELL " + num_to_trade);
+ 				to_exchange.println("ADD " + identifier + " VALE BUY " + num_to_trade);
  			}
  			
  		}
 		// Pennypinching or GS MS WFC
-		for(int stock = 3; stock <=5; stock++)
+		for(int stock = 3; stock <=5; stock++){
 			int num_to_sell = 100 + levels[i] - sells_sent[i];
 			int num_to_buy = 100 - levels[i] - buys_sent[i];
-	}	if(spread[stock]>= 4.9){
+		if(spread[stock]>= 4.9){
 			to_exchange.println("ADD " + identifier + nameToInt(stock) + " SELL " +  (mSell[stock]- 1)  + num_to_sell);
 			to_exchange.println("ADD " + identifier + nameToInt(stock) + " BUY " +  (mBuy[stock]+ 1) + num_to_buy);
 }
-	}
+	}}
 }
 
