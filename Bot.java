@@ -49,8 +49,8 @@ public class Bot
 		try
 		{
 			// initialization
-			skt = new Socket("test-exch-same", 20000);
-			// skt = new Socket("production", 20000);
+			// skt = new Socket("test-exch-same", 20000);
+			skt = new Socket("production", 20000);
 			from_exchange = new BufferedReader(new InputStreamReader(skt.getInputStream()));
 			to_exchange = new PrintWriter(skt.getOutputStream(), true);
 
@@ -198,7 +198,7 @@ public class Bot
 					break;
 			}
 			action_buffer++;
-			if(action_buffer % 5 == 0) {
+			if(action_buffer % 50 == 0) {
 				executeTrades();
 			}
 		}
@@ -206,7 +206,6 @@ public class Bot
 
 	public static void executeTrades() {
 		// bonds
-		/*
 		{
 			int num_to_sell = limits[0]/2 + levels[0] - sells_sent[0];
 			int num_to_buy = limits[0]/2 - levels[0] - buys_sent[0];
@@ -272,8 +271,6 @@ public class Bot
 			to_exchange.println("ADD " + identifier + " VALE BUY " + ( (int) mid[nameToInt("VALBZ")]-2) + " " +  2);
 				identifier++;
 		}
-		*/
-
 
 		
 		double XLFmid =.3*mSell[nameToInt("BOND")] + .2*mSell[nameToInt("GS")] + .3*mSell[nameToInt("MS")]+ .2*mSell[nameToInt("WFC")];
