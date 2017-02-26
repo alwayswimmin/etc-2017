@@ -135,8 +135,8 @@ public class Bot
 						sells_sent[asset] -= num;
 						usd += num * price;
 					}
-					break;
 					executeTrades();
+					break;
 				case "OUT":
 					System.err.printf("The exchange replied: %s\n", message);
 					break;
