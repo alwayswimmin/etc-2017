@@ -49,8 +49,8 @@ public class Bot
 		try
 		{
 			// initialization
-			// skt = new Socket("test-exch-same", 20000);
-			skt = new Socket("production", 20000);
+			skt = new Socket("test-exch-same", 20000);
+			// skt = new Socket("production", 20000);
 			from_exchange = new BufferedReader(new InputStreamReader(skt.getInputStream()));
 			to_exchange = new PrintWriter(skt.getOutputStream(), true);
 
@@ -206,6 +206,7 @@ public class Bot
 
 	public static void executeTrades() {
 		// bonds
+		/*
 		{
 			int num_to_sell = limits[0]/2 + levels[0] - sells_sent[0];
 			int num_to_buy = limits[0]/2 - levels[0] - buys_sent[0];
@@ -270,6 +271,17 @@ public class Bot
 				identifier++;
 			to_exchange.println("ADD " + identifier + " VALE BUY " + ( (int) mid[nameToInt("VALBZ")]-2) + " " +  2);
 				identifier++;
+		}
+		*/
+
+
+		
+		double XLFmid =.3*mSell[nameToInt("BOND")] + .2*mSell[nameToInt("GS")] + .3*mSell[nameToInt("MS")]+ .2*mSell[nameToInt("WFC")];
+		if((int)Math.ceil(XLFmid) != (int)Math.floor(XLFmid)){
+			to_exchange.println("ADD " + identifier + " XLF SELL " + ((int)Math.ceil(XLFmid)+10) + " " + 2);
+			identifier++;
+			to_exchange.println("ADD " + identifier + " XLF BUY " + ((int)Math.floor(XLFmid)-10) + " " +  2);
+			identifier++;
 		}
 		// Pennypinching or GS MS WFC
 /*
