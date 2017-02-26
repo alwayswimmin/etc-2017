@@ -56,7 +56,10 @@ public class Bot
 	public static void handleIncomingMessages() throws IOException {
 		for(String message = from_exchange.readLine(); message != null; message = from_exchange.readLine()) {
 			// do stuff
-			System.err.printf("The exchange replied: %s\n", message);
+			StringTokenizer st = new StringTokenizer(message);
+			if(st.nextToken().equals("ACK")) {
+				System.err.printf("The exchange replied: %s\n", message);
+			}
 		}
 	}
 
