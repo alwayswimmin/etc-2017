@@ -15,13 +15,13 @@ public class Bot
 	public static BufferedReader from_exchange;
 	public static PrintWriter to_exchange;
 
-	public static int identifier = 1;
+	public static int identifier;
 
 	public static void main(String[] args)
 	{
-		// setting up connection
 		try
 		{
+			// initialization
 			skt = new Socket("test-exch-same", 20000);
 			from_exchange = new BufferedReader(new InputStreamReader(skt.getInputStream()));
 			to_exchange = new PrintWriter(skt.getOutputStream(), true);
@@ -29,6 +29,8 @@ public class Bot
 			to_exchange.println("HELLO SAME");
 			String reply = from_exchange.readLine().trim();
 			System.err.printf("The exchange replied: %s\n", reply);
+
+			identifier = 1;
 
 			// here temporarily
 			to_exchange.println("ADD " + identifier + " BOND BUY 999 100");
@@ -54,6 +56,7 @@ public class Bot
 	public static void handleIncomingMessages() {
 		for(String message = from_exchange.nextLine(); message != null; message = from_exchange.nextLine()) {
 			// do stuff
+			System.err.printf("The exchange replied: %s\n", message);
 		}
 	}
 
