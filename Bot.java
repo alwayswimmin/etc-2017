@@ -46,6 +46,10 @@ public class Bot
 			String reply = from_exchange.readLine().trim();
 			System.err.printf("The exchange replied: %s\n", reply);
 			
+			if(!reply.split(" ")[0].equals("HELLO")) {
+				System.exit(0);
+			}
+
 			for(int i = 0; i <6; i++){
 // 				levels[i] = reply.substring(reply.indexOf(intToName(i))+reply.indexOf(intToName(i)).length(), reply.indexOf(" ", reply.indexOf(intToName(i))));
 				levels[i] = Integer.parseInt(reply.substring(reply.indexOf(":", reply.indexOf(intToName(i)))+1, reply.indexOf(" ", reply.indexOf(intToName(i)))));
@@ -139,6 +143,9 @@ public class Bot
 					break;
 				case "OUT":
 					System.err.printf("The exchange replied: %s\n", message);
+					break;
+				case "CLOSE":
+					System.exit(0);
 					break;
 			}
 		}
