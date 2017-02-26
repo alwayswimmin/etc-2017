@@ -56,12 +56,13 @@ public class Bot
 	public static void handleIncomingMessages() throws IOException {
 		for(String message = from_exchange.readLine(); message != null; message = from_exchange.readLine()) {
 			// do stuff
-			// System.err.printf("The exchange replied: %s\n", message);
+			System.err.printf("The exchange replied: %s\n", message);
 		}
 	}
 
 	public static void executeTrades() {
 		// do stuff
+		System.err.printf("executing trades\n");
 	}
 }
 
