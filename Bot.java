@@ -124,6 +124,7 @@ public class Bot
 	public static void handleIncomingMessages() throws IOException {
 		for(String message = from_exchange.readLine(); message != null; message = from_exchange.readLine()) {
 			String[] tokens = message.split(" ");
+			int asset;
 			switch(tokens[0]) {
 				case "ACK":
 				case "REJECT":
@@ -136,15 +137,32 @@ public class Bot
 					// int num = Integer.parseInt(tokens[3]);
 					break;
 				case "BOOK":
-					int asset = nameToInt(tokens[1]);
-					int max_buy;
+					asset = nameToInt(tokens[1]);
+					int max_buy = 0;
+					int min_sell = Integer.MAX_VALUE;
+					boolean buyZone = true;
 					for(int i = 2; i < tokens.length; i++) {
-						
+						if(tokens[i].equals("BUY")) {
+							continue;
+						}
+						if(tokens[i].equals("SELL")) {
+							buyZone = false;
+							continue;
+						}
+						String[] arr = tokens[i].split(":");
+						int x = Integer.parseInt(arr[0]);
+						if(buyZone && x > max_buy) {
+							max_buy = x;
+						}
+						if(!buyZone && x < min_sell) {
+							min_sell = x;
+						}
 					}
+					mid[asset] = (max_buy + min_sell) / 2.0;
 					break;
 				case "FILL":
 					System.err.printf("The exchange replied: %s\n", message);
-					int asset = nameToInt(tokens[2]);
+					asset = nameToInt(tokens[2]);
 					int price = Integer.parseInt(tokens[4]);
 					int num = Integer.parseInt(tokens[5]);
 					if(tokens[3].equals("BUY")) {
@@ -156,12 +174,12 @@ public class Bot
 						sells_sent[asset] -= num;
 						usd += num * price;
 					}
-					executeTrades();
 					break;
 				case "CLOSE":
 					System.exit(0);
 					break;
 			}
+			executeTrades();
 		}
 	}
 
