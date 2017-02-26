@@ -45,6 +45,11 @@ public class Bot
 			to_exchange.println("HELLO SAME");
 			String reply = from_exchange.readLine().trim();
 			System.err.printf("The exchange replied: %s\n", reply);
+			
+			for(int i = 0; i <7; i++){
+				levels[i] = reply.substring(reply.indexOf(intToName(i))+reply.indexOf(intToName(i)).length(), reply.indexOf(" ", reply.indexOf(intToName(i))));
+			}
+			
 
 			identifier = 1;
 
