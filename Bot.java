@@ -1,3 +1,7 @@
+/*
+Allison Paul, Samuel Hsiang, Vaughan McDonald
+*/
+
 import java.lang.*;
 import java.io.PrintWriter;
 import java.io.InputStreamReader;
