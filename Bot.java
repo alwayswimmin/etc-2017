@@ -4,6 +4,7 @@
 
 import java.lang.*;
 import java.io.*;
+import java.util.*;
 import java.net.Socket;
 
 public class Bot
@@ -20,7 +21,8 @@ public class Bot
 		try
 		{
 			// initialization
-			skt = new Socket("test-exch-same", 20000);
+			// skt = new Socket("test-exch-same", 20000);
+			skt = new Socket("production", 20000);
 			from_exchange = new BufferedReader(new InputStreamReader(skt.getInputStream()));
 			to_exchange = new PrintWriter(skt.getOutputStream(), true);
 
@@ -54,7 +56,7 @@ public class Bot
 	public static void handleIncomingMessages() throws IOException {
 		for(String message = from_exchange.readLine(); message != null; message = from_exchange.readLine()) {
 			// do stuff
-			System.err.printf("The exchange replied: %s\n", message);
+			// System.err.printf("The exchange replied: %s\n", message);
 		}
 	}
 
