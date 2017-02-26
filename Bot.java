@@ -28,6 +28,8 @@ public class Bot
 	public static int[] buys_sent = new int[7];
 	public static int[] sells_sent = new int[7];
 	public static double[] mid = new double[7];
+	public static double[] mBuy = new double[7];
+	public static double[] mSell = new double[7];
 	public static double[] fair_price = new double[7];
 	public static double[] spread = new double[7];
 	public static int[] num_market_trades = new int[7];
@@ -165,10 +167,16 @@ public class Bot
 							min_sell = x;
 						}
 					}
+<<<<<<< HEAD
+					mid[asset] = (max_buy + min_sell) / 2.0;
+					mBuy[asset] = max_buy;
+					mSell[asset] = min_sell;
+=======
 					if(max_buy > 0 && min_sell < Integer.MAX_VALUE) {
 						mid[asset] = (max_buy + min_sell) / 2.0;
 						spread[asset] = min_sell - max_buy;
 					}
+>>>>>>> 1a572ee672bc7a398e93fa548e8bdc96bc870287
 					break;
 				case "FILL":
 					System.err.printf("The exchange replied: %s\n", message);
@@ -209,6 +217,27 @@ public class Bot
 				identifier++;
 			}
 		}
+		
+	// 	if(levels[nameToInt("VALE")] == 10 || levels[nameToInt("VALE")] == -10){
+// 			if(
+// 				to_exchange.println("CONVERT" + identifier + " BOND BUY 999 " + num_to_buy);
+// 		}
+// 		if(levels[nameToInt("VALBZ")] == 10 || levels[nameToInt("VALBZ")] == -10){
+// 			to_exchange.println("ADD " + identifier + " BOND BUY 999 " + num_to_buy);
+// 		}
+// 
+// 		if (mid[nameToInt("VALE")] < mid[nameToInt("VALBZ")]){
+// 
+// 		}
+// 		identifier++;
+		// Pennypinching or GS MS WFC
+		for(int stock = 3; stock <=5; stock++)
+			int num_to_sell = 100 + levels[i] - sells_sent[i];
+			int num_to_buy = 100 - levels[i] - buys_sent[i];
+	}	if(spread[stock]>= 4.9){
+			to_exchange.println("ADD " + identifier + nameToInt(stock) + " SELL " +  (mSell[stock]- 1)  + num_to_sell);
+			to_exchange.println("ADD " + identifier + nameToInt(stock) + " BUY " +  (mBuy[stock]+ 1) + num_to_buy);
+}
 	}
 }
 
