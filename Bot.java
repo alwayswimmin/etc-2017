@@ -28,6 +28,8 @@ public class Bot
 	public static int[] buys_sent = new int[7];
 	public static int[] sells_sent = new int[7];
 	public static double[] mid = new double[7];
+	public static double[] mBuy = new double[7];
+	public static double[] mSell = new double[7];
 	public static double[] fair_price = new double[7];
 	public static double[] spread = new double[7];
 	public static int[] num_market_trades = new int[7];
@@ -159,6 +161,8 @@ public class Bot
 						}
 					}
 					mid[asset] = (max_buy + min_sell) / 2.0;
+					mBuy[asset] = max_buy;
+					mSell[asset] = min_sell;
 					break;
 				case "FILL":
 					System.err.printf("The exchange replied: %s\n", message);
@@ -197,6 +201,20 @@ public class Bot
 			sells_sent[0] += num_to_sell;
 			identifier++;
 		}
+		
+	// 	if(levels[nameToInt("VALE")] == 10 || levels[nameToInt("VALE")] == -10){
+// 			if(
+// 				to_exchange.println("CONVERT" + identifier + " BOND BUY 999 " + num_to_buy);
+// 		}
+// 		if(levels[nameToInt("VALBZ")] == 10 || levels[nameToInt("VALBZ")] == -10){
+// 			to_exchange.println("ADD " + identifier + " BOND BUY 999 " + num_to_buy);
+// 		}
+// 
+// 		if (mid[nameToInt("VALE")] < mid[nameToInt("VALBZ")]){
+// 
+// 		}
+// 		identifier++;
+
 	}
 }
 
