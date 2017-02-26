@@ -1,6 +1,6 @@
 /*
    Allison Paul, Samuel Hsiang, Vaughan McDonald
-   */
+ */
 
 import java.lang.*;
 import java.io.*;
@@ -37,7 +37,7 @@ public class Bot
 
 	public static TreeSet<Integer>[] buyIdentifiers = new TreeSet[7];
 	public static TreeSet<Integer>[] sellIdentifiers = new TreeSet[7];
-	public static Map<Integer,Integer> sizeOfIdentifier = new TreeMap<Integer,Integer>();
+	public static TreeMap<Integer,Integer> sizeOfIdentifier = new TreeMap<Integer,Integer>();
 
 	public static int usd = 0;
 
@@ -49,8 +49,8 @@ public class Bot
 		try
 		{
 			// initialization
-			// skt = new Socket("test-exch-same", 20000);
-			skt = new Socket("production", 20000);
+			skt = new Socket("test-exch-same", 20000);
+			// skt = new Socket("production", 20000);
 			from_exchange = new BufferedReader(new InputStreamReader(skt.getInputStream()));
 			to_exchange = new PrintWriter(skt.getOutputStream(), true);
 
@@ -220,86 +220,100 @@ public class Bot
 				identifier++;
 			}
 		}
-		
-	// 	if(levels[nameToInt("VALE")] == 10 || levels[nameToInt("VALE")] == -10){
-// 			if(
-// 				to_exchange.println("CONVERT" + identifier + " BOND BUY 999 " + num_to_buy);
-// 		}
-// 		if(levels[nameToInt("VALBZ")] == 10 || levels[nameToInt("VALBZ")] == -10){
-// 			to_exchange.println("ADD " + identifier + " BOND BUY 999 " + num_to_buy);
-// 		}
-// 
-// 		if (mid[nameToInt("VALE")] < mid[nameToInt("VALBZ")]){
-// 
-// 		}
-// 		identifier++;
+
+		// 	if(levels[nameToInt("VALE")] == 10 || levels[nameToInt("VALE")] == -10){
+		// 			if(
+		// 				to_exchange.println("CONVERT" + identifier + " BOND BUY 999 " + num_to_buy);
+		// 		}
+		// 		if(levels[nameToInt("VALBZ")] == 10 || levels[nameToInt("VALBZ")] == -10){
+		// 			to_exchange.println("ADD " + identifier + " BOND BUY 999 " + num_to_buy);
+		// 		}
+		// 
+		// 		if (mid[nameToInt("VALE")] < mid[nameToInt("VALBZ")]){
+		// 
+		// 		}
+		// 		identifier++;
 		if(levels[nameToInt("VALE")] == 10){
-			to_exchange.println("CONVERT " + identifier + " VALE SELL" + 10);
+			to_exchange.println("CONVERT " + identifier + " VALE SELL " + 10);
 			identifier++;
 		}
 		if(levels[nameToInt("VALE")] == -10){
-			to_exchange.println("CONVERT " + identifier + " VALE BUY" + 10);
+			to_exchange.println("CONVERT " + identifier + " VALE BUY " + 10);
 			identifier++;
 		}
 		if(levels[nameToInt("VALBZ")] == 10){
-			to_exchange.println("CONVERT " + identifier + " VALBZ SELL" + 10);
+			to_exchange.println("CONVERT " + identifier + " VALBZ SELL " + 10);
 			identifier++;
 		}
 		if(levels[nameToInt("VALBZ")] == -10){
-			to_exchange.println("CONVERT " + identifier + " VALBZ BUY" + 10);
+			to_exchange.println("CONVERT " + identifier + " VALBZ BUY " + 10);
 			identifier++;
 		}
-		
- 		if(levels[nameToInt("VALE")] != 10 || levels[nameToInt("VALE")] != -10 && levels[nameToInt("VALBZ")] != 10 || levels[nameToInt("VALBZ")] != -10){
- 			if(mBuy[nameToInt("VALE")] > 1+  mSell[nameToInt("VALBZ")]){
- 				num_to_trade = Math.min(10-levels[nameToInt("VALBZ")], 10+levels[nameToInt("VALE")]);
- 				to_exchange.println("ADD " + identifier + " VALE SELL " + num_to_trade);
- 				to_exchange.println("ADD " + identifier + " VALBZ BUY " + num_to_trade);
- 			}
- 			
- 			if(mBuy[nameToInt("VALBZ")] > 1 + mSell[nameToInt("VALBZ")]){
- 				num_to_trade = Math.min(10-levels[nameToInt("VALE")], 10+levels[nameToInt("VALBZ")]);
- 				to_exchange.println("ADD " + identifier + " VALBZ SELL " + num_to_trade);
- 				to_exchange.println("ADD " + identifier + " VALE BUY " + num_to_trade);
- 			}
- 			
- 		}
+
+		if(levels[nameToInt("VALE")] != 10 || levels[nameToInt("VALE")] != -10 && levels[nameToInt("VALBZ")] != 10 || levels[nameToInt("VALBZ")] != -10){
+			if(mBuy[nameToInt("VALE")] > 1+  mSell[nameToInt("VALBZ")]){
+				int num_to_trade = Math.min(10-levels[nameToInt("VALBZ")], 10+levels[nameToInt("VALE")]);
+				to_exchange.println("ADD " + identifier + " VALE SELL " + mBuy[nameToInt("VALE")] + " " +  num_to_trade);
+			identifier++;
+				to_exchange.println("ADD " + identifier + " VALBZ BUY " + mSell[nameToInt("VALBZ")] + " " + num_to_trade);
+			identifier++;
+			}
+
+			if(mBuy[nameToInt("VALBZ")] > 1 + mSell[nameToInt("VALBZ")]){
+				int num_to_trade = Math.min(10-levels[nameToInt("VALE")], 10+levels[nameToInt("VALBZ")]);
+				to_exchange.println("ADD " + identifier + " VALBZ SELL " + mBuy[nameToInt("VALBZ")] + " " +  num_to_trade);
+			identifier++;
+				to_exchange.println("ADD " + identifier + " VALE BUY " + mSell[nameToInt("VALE")] + " " + num_to_trade);
+			identifier++;
+			}
+
+		}
 		// Pennypinching or GS MS WFC
 		for(int stock = 3; stock <=5; stock++) {
-			if(spread[stock]>= 4.9){
-				int num_to_sell = limits[stock] / 2 + levels[stock] - sells_sent[stock];
-				int num_to_buy = limits[stock] / 2 - levels[stock] - buys_sent[stock];
+			if(spread[stock]>= 2.9){
+				/*
+				   int num_to_sell = limits[stock] / 2 + levels[stock] - sells_sent[stock];
+				   int num_to_buy = limits[stock] / 2 - levels[stock] - buys_sent[stock];
+				   int new_sell_price = ( (int) Math.round(mSell[stock]- 1) );
+				   int new_buy_price = ( (int) Math.round(mBuy[stock]+ 1) );
+				   if(new_sell_price != our_sell_price[stock]) {
+				   while(!sellIdentifiers[stock].isEmpty()) {
+				   int x = sellIdentifiers[stock].first();
+				   to_exchange.println("CANCEL " + x);
+				   num_to_sell += sizeOfIdentifier.get(x);
+				   sizeOfIdentifier.remove(x);
+				   }
+				   }
+				   if(new_buy_price != our_buy_price[stock]) {
+				   while(!buyIdentifiers[stock].isEmpty()) {
+				   int x = sellIdentifiers[stock].first();
+				   to_exchange.println("CANCEL " + x);
+				   num_to_sell += sizeOfIdentifier.get(x);
+				   sizeOfIdentifier.remove(x);
+				   }
+				   }
+				 */
+				int num_to_sell = 3;
+				int num_to_buy = 3;
 				int new_sell_price = ( (int) Math.round(mSell[stock]- 1) );
 				int new_buy_price = ( (int) Math.round(mBuy[stock]+ 1) );
-				if(new_sell_price != our_sell_price[stock]) {
-					while(!sellIdentifiers[stock].isEmpty()) {
-						int x = sellIdentifiers[stock].first();
-						to_exchange.println("CANCEL " + x);
-						num_to_sell += sizeOfIdentifier.get(x);
-						sizeOfIdentifier.remove(x);
+				if(buys_sent[stock] < 2) {
+					if(num_to_buy > 0) {
+						to_exchange.println("ADD " + identifier + " " + intToName(stock) + " BUY " +  new_buy_price + " " + num_to_buy);
+						buyIdentifiers[stock].add(identifier);
+						sizeOfIdentifier.put(identifier, num_to_buy);
+						buys_sent[stock] += num_to_buy;
+						identifier++;
 					}
 				}
-				if(new_buy_price != our_buy_price[stock]) {
-					while(!buyIdentifiers[stock].isEmpty()) {
-						int x = sellIdentifiers[stock].first();
-						to_exchange.println("CANCEL " + x);
-						num_to_sell += sizeOfIdentifier.get(x);
-						sizeOfIdentifier.remove(x);
+				if(sells_sent[stock] < 2) {
+					if(num_to_sell > 0) {
+						to_exchange.println("ADD " + identifier + " " +  intToName(stock) + " SELL " + new_sell_price + " "  + num_to_sell);
+						sellIdentifiers[stock].add(identifier);
+						sizeOfIdentifier.put(identifier, num_to_sell);
+						sells_sent[stock] += num_to_sell;
+						identifier++;
 					}
-				}
-				if(num_to_buy > 0) {
-					to_exchange.println("ADD " + identifier + " " +  intToName(stock) + " SELL " + our_sell_price + " "  + num_to_sell);
-					buyIdentifiers[stock].add(identifier);
-					sizeOfIdentifier.put(identifier, num_to_buy);
-					buys_sent[stock] += num_to_buy;
-					identifier++;
-				}
-				if(num_to_sell > 0) {
-					to_exchange.println("ADD " + identifier + " " + intToName(stock) + " BUY " +  our_buy_price + " " + num_to_buy);
-					sellIdentifiers[stock].add(identifier);
-					sizeOfIdentifier.put(identifier, num_to_sell);
-					sells_sent[stock] += num_to_sell;
-					identifier++;
 				}
 			}
 		}
