@@ -54,7 +54,7 @@ public class Bot
 	}
 
 	public static void handleIncomingMessages() {
-		for(String message = from_exchange.nextLine(); message != null; message = from_exchange.nextLine()) {
+		for(String message = from_exchange.readLine(); message != null; message = from_exchange.readLine()) {
 			// do stuff
 			System.err.printf("The exchange replied: %s\n", message);
 		}
