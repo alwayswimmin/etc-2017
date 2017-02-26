@@ -136,7 +136,6 @@ public class Bot
 	}
 
 	public static void executeTrades() {
-		System.err.printf("executing trades\n");
 		// bonds
 		int num_to_sell = 100 + levels[0] - sells_sent[0];
 		int num_to_buy = 100 - levels[0] - buys_sent[0];
