@@ -141,10 +141,12 @@ public class Bot
 		int num_to_buy = 100 - levels[0] - buys_sent[0];
 		if(num_to_buy > 0) {
 			to_exchange.println("ADD " + identifier + " BOND BUY 999 " + num_to_buy);
+			buys_sent[0] += num_to_buy;
 			identifier++;
 		}
 		if(num_to_sell > 0) {
 			to_exchange.println("ADD " + identifier + " BOND SELL 1001 " + num_to_sell);
+			sells_sent[0] += num_to_sell;
 			identifier++;
 		}
 	}
