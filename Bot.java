@@ -27,6 +27,8 @@ public class Bot
 	public static int[] sell_levels = new int[7];
 	public static int[] buys_sent = new int[7];
 	public static int[] sells_sent = new int[7];
+	public static int[] fair_price = new int[7];
+	public static int[] spread = new int[7];
 
 	public static int usd = 0;
 
@@ -63,7 +65,7 @@ public class Bot
 			while(true) {
 				try {
 					handleIncomingMessages();
-					executeTrades();
+					// executeTrades();
 				} catch(Exception e) {
 					e.printStackTrace(System.out);
 				}
