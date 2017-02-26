@@ -25,6 +25,8 @@ public class Bot
 	public static int[] levels = new int[7];
 	public static int[] buy_levels = new int[7];
 	public static int[] sell_levels = new int[7];
+	public static int[] buys_sent = new int[7];
+	public static int[] sells_sent = new int[7];
 
 	public static int usd = 0;
 
@@ -45,12 +47,6 @@ public class Bot
 			System.err.printf("The exchange replied: %s\n", reply);
 
 			identifier = 1;
-
-			// here temporarily
-			to_exchange.println("ADD " + identifier + " BOND BUY 999 100");
-			identifier++;
-			to_exchange.println("ADD " + identifier + " BOND SELL 1001 100");
-			identifier++;
 
 			while(true) {
 				try {
@@ -102,9 +98,19 @@ public class Bot
 					break;
 				case "FILL":
 					System.err.printf("The exchange replied: %s\n", message);
-					int asset = nameToInt(tokens[3]);
+					int asset = nameToInt(tokens[2]);
 					int price = Integer.parseInt(tokens[4]);
 					int num = Integer.parseInt(tokens[5]);
+					if(tokens[3].equals("BUY") {
+						levels[asset] += num;
+						buys_sent[asset] -= num;
+						usd -= num * price;
+					} else {
+						levels[asset] -= num;
+						sells_sent[asset] -= num;
+						usd += num * price;
+					}
+					break;
 				case "OUT":
 					System.err.printf("The exchange replied: %s\n", message);
 					break;
@@ -113,8 +119,18 @@ public class Bot
 	}
 
 	public static void executeTrades() {
-		// do stuff
 		System.err.printf("executing trades\n");
+		// bonds
+		int num_to_sell = 100 + levels[0] - sells_sent[0];
+		int num_to_buy = 100 - levels[0] - buys_sent[0];
+		if(num_to_buy > 0) {
+			to_exchange.println("ADD " + identifier + " BOND BUY 999 " + num_to_buy);
+			identifier++;
+		}
+		if(num_to_sell > 0) {
+			to_exchange.println("ADD " + identifier + " BOND SELL 1001 " + num_to_sell);
+			identifier++;
+		}
 	}
 }
 
