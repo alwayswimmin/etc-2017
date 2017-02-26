@@ -15,6 +15,8 @@ public class Bot
 	public static BufferedReader from_exchange;
 	public static PrintWriter to_exchange;
 
+	public static int identifier = 1;
+
 	public static void main(String[] args)
 	{
 		// setting up connection
@@ -27,6 +29,12 @@ public class Bot
 			to_exchange.println("HELLO SAME");
 			String reply = from_exchange.readLine().trim();
 			System.err.printf("The exchange replied: %s\n", reply);
+
+			// here temporarily
+			to_exchange.println("ADD " + identifier + " BOND BUY 999 100");
+			identifier++;
+			to_exchange.println("ADD " + identifier + " BOND SELL 1001 100");
+			identifier++;
 
 			while(true) {
 				try {
