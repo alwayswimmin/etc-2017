@@ -27,8 +27,10 @@ public class Bot
 	public static int[] sell_levels = new int[7];
 	public static int[] buys_sent = new int[7];
 	public static int[] sells_sent = new int[7];
-	public static int[] fair_price = new int[7];
-	public static int[] spread = new int[7];
+	public static double[] mid = new double[7];
+	public static double[] fair_price = new double[7];
+	public static double[] spread = new double[7];
+	public static int[] num_market_trades = new int[7];
 
 	public static int usd = 0;
 
@@ -125,7 +127,20 @@ public class Bot
 			switch(tokens[0]) {
 				case "ACK":
 				case "REJECT":
+				case "OUT":
 					System.err.printf("The exchange replied: %s\n", message);
+					break;
+				case "TRADE":
+					// int asset = nameToInt(tokens[1]);
+					// int price = Integer.parseInt(tokens[2]);
+					// int num = Integer.parseInt(tokens[3]);
+					break;
+				case "BOOK":
+					int asset = nameToInt(tokens[1]);
+					int max_buy;
+					for(int i = 2; i < tokens.length; i++) {
+						
+					}
 					break;
 				case "FILL":
 					System.err.printf("The exchange replied: %s\n", message);
@@ -142,9 +157,6 @@ public class Bot
 						usd += num * price;
 					}
 					executeTrades();
-					break;
-				case "OUT":
-					System.err.printf("The exchange replied: %s\n", message);
 					break;
 				case "CLOSE":
 					System.exit(0);
