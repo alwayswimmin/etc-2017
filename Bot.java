@@ -50,7 +50,7 @@ public class Bot
 // 				levels[i] = reply.substring(reply.indexOf(intToName(i))+reply.indexOf(intToName(i)).length(), reply.indexOf(" ", reply.indexOf(intToName(i))));
 				levels[i] = Integer.parseInt(reply.substring(reply.indexOf(":", reply.indexOf(intToName(i)))+1, reply.indexOf(" ", reply.indexOf(intToName(i)))));
 			}
-			levels[6] =  Integer.parseInt(reply.substring(reply.indexOf(":", reply.indexOf(intToName(i)))+1);
+			levels[6] =  Integer.parseInt(reply.substring(reply.indexOf(":", reply.indexOf(intToName(6)))+1));
 			
 
 			identifier = 1;
