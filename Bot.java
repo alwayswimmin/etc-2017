@@ -220,19 +220,48 @@ public class Bot
 				identifier++;
 			}
 		}
-
-		// 	if(levels[nameToInt("VALE")] == 10 || levels[nameToInt("VALE")] == -10){
-		// 			if(
-		// 				to_exchange.println("CONVERT" + identifier + " BOND BUY 999 " + num_to_buy);
-		// 		}
-		// 		if(levels[nameToInt("VALBZ")] == 10 || levels[nameToInt("VALBZ")] == -10){
-		// 			to_exchange.println("ADD " + identifier + " BOND BUY 999 " + num_to_buy);
-		// 		}
-		// 
-		// 		if (mid[nameToInt("VALE")] < mid[nameToInt("VALBZ")]){
-		// 
-		// 		}
-		// 		identifier++;
+		
+	// 	if(levels[nameToInt("VALE")] == 10 || levels[nameToInt("VALE")] == -10){
+// 			if(
+// 				to_exchange.println("CONVERT" + identifier + " BOND BUY 999 " + num_to_buy);
+// 		}
+// 		if(levels[nameToInt("VALBZ")] == 10 || levels[nameToInt("VALBZ")] == -10){
+// 			to_exchange.println("ADD " + identifier + " BOND BUY 999 " + num_to_buy);
+// 		}
+// 
+// 		if (mid[nameToInt("VALE")] < mid[nameToInt("VALBZ")]){
+// 
+// 		}
+// 		identifier++;
+		if(levels[nameToInt("VALE")] == 10){
+			to_exchange.println("CONVERT " + identifier + " VALE SELL" + 10);
+			identifier++;
+		}
+		if(levels[nameToInt("VALE")] == -10){
+			to_exchange.println("CONVERT " + identifier + " VALE BUY" + 10);
+			identifier++;
+		}
+		if(levels[nameToInt("VALBZ")] == 10){
+			to_exchange.println("CONVERT " + identifier + " VALBZ SELL" + 10);
+			identifier++;
+		}
+		if(levels[nameToInt("VALBZ")] == -10){
+			to_exchange.println("CONVERT " + identifier + " VALBZ BUY" + 10);
+			identifier++;
+		}
+		
+ 		if(levels[nameToInt("VALE")] != 10 || levels[nameToInt("VALE")] != -10 && levels[nameToInt("VALBZ")] != 10 || levels[nameToInt("VALBZ")] != -10){
+ 			if(mBuy[nameToInt("VALE")] > 1+  mSell[nameToInt("VALBZ")]){
+ 				to_exchange.println("ADD " + identifier + " VALE SELL" + 10);
+ 				to_exchange.println("ADD " + identifier + " VALBZ BUY" + 10);
+ 			}
+ 			
+ 			if(mBuy[nameToInt("VALBZ")] > 1 + mSell[nameToInt("VALBZ")]){
+ 				to_exchange.println("ADD " + identifier + " VALBZ SELL" + 10);
+ 				to_exchange.println("ADD " + identifier + " VALE BUY" + 10);
+ 			}
+ 			
+ 		}
 		// Pennypinching or GS MS WFC
 		for(int stock = 3; stock <=5; stock++) {
 			if(spread[stock]>= 4.9){
