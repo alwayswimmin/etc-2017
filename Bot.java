@@ -23,14 +23,17 @@ public class Bot
 	// XLF		6
 
 	public static int[] levels = new int[7];
-	public static int[] buy_levels = new int[7];
-	public static int[] sell_levels = new int[7];
+	public static int[] our_buy_price = new int[7];
+	public static int[] our_sell_price = new int[7];
 	public static int[] buys_sent = new int[7];
 	public static int[] sells_sent = new int[7];
 	public static double[] mid = new double[7];
 	public static double[] fair_price = new double[7];
 	public static double[] spread = new double[7];
 	public static int[] num_market_trades = new int[7];
+	public static int[] limits = {100, 10, 10, 100, 100, 100, 100};
+
+	public static Set<Integer>[] indentifiers_by_asset = (Set<Integer>[]) (new TreeSet[7]);
 
 	public static int usd = 0;
 
@@ -50,6 +53,10 @@ public class Bot
 			String reply = from_exchange.readLine().trim();
 			System.err.printf("The exchange replied: %s\n", reply);
 			
+			for(int i = 0; i < 7; i++) {
+				identifiers_by_asset[i] = new TreeSet<Integer>();
+			}
+
 			if(!reply.split(" ")[0].equals("HELLO")) {
 				System.exit(0);
 			}
@@ -126,9 +133,9 @@ public class Bot
 			String[] tokens = message.split(" ");
 			int asset;
 			switch(tokens[0]) {
-				case "ACK":
 				case "REJECT":
 				case "OUT":
+				case "ACK":
 					System.err.printf("The exchange replied: %s\n", message);
 					break;
 				case "TRADE":
@@ -160,6 +167,7 @@ public class Bot
 					}
 					if(max_buy > 0 && min_sell < Integer.MAX_VALUE) {
 						mid[asset] = (max_buy + min_sell) / 2.0;
+						spread[asset] = min_sell - max_buy;
 					}
 					break;
 				case "FILL":
@@ -187,17 +195,19 @@ public class Bot
 
 	public static void executeTrades() {
 		// bonds
-		int num_to_sell = 100 + levels[0] - sells_sent[0];
-		int num_to_buy = 100 - levels[0] - buys_sent[0];
-		if(num_to_buy > 0) {
-			to_exchange.println("ADD " + identifier + " BOND BUY 999 " + num_to_buy);
-			buys_sent[0] += num_to_buy;
-			identifier++;
-		}
-		if(num_to_sell > 0) {
-			to_exchange.println("ADD " + identifier + " BOND SELL 1001 " + num_to_sell);
-			sells_sent[0] += num_to_sell;
-			identifier++;
+		{
+			int num_to_sell = limits[0]/2 + levels[0] - sells_sent[0];
+			int num_to_buy = limits[0]/2 - levels[0] - buys_sent[0];
+			if(num_to_buy > 0) {
+				to_exchange.println("ADD " + identifier + " BOND BUY 999 " + num_to_buy);
+				buys_sent[0] += num_to_buy;
+				identifier++;
+			}
+			if(num_to_sell > 0) {
+				to_exchange.println("ADD " + identifier + " BOND SELL 1001 " + num_to_sell);
+				sells_sent[0] += num_to_sell;
+				identifier++;
+			}
 		}
 	}
 }
