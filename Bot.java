@@ -220,7 +220,14 @@ public class Bot
 // 
 // 		}
 // 		identifier++;
-
+		// Pennypinching or GS MS WFC
+		for(int stock = 3; stock <=5; stock++)
+			int num_to_sell = 100 + levels[i] - sells_sent[i];
+			int num_to_buy = 100 - levels[i] - buys_sent[i];
+	}	if(spread[stock]>= 4.9){
+			to_exchange.println("ADD " + identifier + nameToInt(stock) + " SELL " +  (mSell[stock]- 1)  + num_to_sell);
+			to_exchange.println("ADD " + identifier + nameToInt(stock) + " BUY " +  (mBuy[stock]+ 1) + num_to_buy);
+}
 	}
 }
 
