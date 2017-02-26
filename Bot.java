@@ -49,8 +49,8 @@ public class Bot
 		try
 		{
 			// initialization
-			skt = new Socket("test-exch-same", 20000);
-			// skt = new Socket("production", 20000);
+			// skt = new Socket("test-exch-same", 20000);
+			skt = new Socket("production", 20000);
 			from_exchange = new BufferedReader(new InputStreamReader(skt.getInputStream()));
 			to_exchange = new PrintWriter(skt.getOutputStream(), true);
 
@@ -142,7 +142,7 @@ public class Bot
 				case "REJECT":
 				case "OUT":
 				case "ACK":
-					System.err.printf("The exchange replied: %s\n", message);
+//					System.err.printf("The exchange replied: %s\n", message);
 					break;
 				case "TRADE":
 					// int asset = nameToInt(tokens[1]);
