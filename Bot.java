@@ -118,7 +118,7 @@ public class Bot
 					int asset = nameToInt(tokens[2]);
 					int price = Integer.parseInt(tokens[4]);
 					int num = Integer.parseInt(tokens[5]);
-					if(tokens[3].equals("BUY") {
+					if(tokens[3].equals("BUY")) {
 						levels[asset] += num;
 						buys_sent[asset] -= num;
 						usd -= num * price;
