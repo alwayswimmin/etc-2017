@@ -22,9 +22,9 @@ public class Bot
 	// WFC		5
 	// XLF		6
 
-	public static int levels = new int[7];
-	public static int buy_levels = new int[7];
-	public static int sell_levels = new int[7];
+	public static int[] levels = new int[7];
+	public static int[] buy_levels = new int[7];
+	public static int[] sell_levels = new int[7];
 
 	public static int usd = 0;
 
@@ -67,9 +67,34 @@ public class Bot
 		}
 	}
 
+	public static int nameToInt(String s) {
+		switch(s) {
+			case "BOND":
+				return 0;
+			case "VALBZ":
+				return 1;
+			case "VALE":
+				return 2;
+			case "GS":
+				return 3;
+			case "MS":
+				return 4;
+			case "WFC":
+				return 5;
+			case "XLF":
+				return 6;
+			default:
+				return -1;
+		}
+	}
+
+	public static String intToName(int i) {
+		return null;
+	}
+
 	public static void handleIncomingMessages() throws IOException {
 		for(String message = from_exchange.readLine(); message != null; message = from_exchange.readLine()) {
-			String[] tokens = message.split();
+			String[] tokens = message.split(" ");
 			switch(tokens[0]) {
 				case "ACK":
 				case "REJECT":
@@ -77,15 +102,9 @@ public class Bot
 					break;
 				case "FILL":
 					System.err.printf("The exchange replied: %s\n", message);
-					switch(tokens[2]) {
-						case "BOND":
-							switch(tokens[3]) {
-								case "BUY":
-								case "SELL":
-							}
-							break;
-					}
-					break;
+					int asset = nameToInt(tokens[3]);
+					int price = Integer.parseInt(tokens[4]);
+					int num = Integer.parseInt(tokens[5]);
 				case "OUT":
 					System.err.printf("The exchange replied: %s\n", message);
 					break;
