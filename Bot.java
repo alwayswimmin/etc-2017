@@ -275,9 +275,9 @@ public class Bot
 		
 		double XLFmid =.3*mSell[nameToInt("BOND")] + .2*mSell[nameToInt("GS")] + .3*mSell[nameToInt("MS")]+ .2*mSell[nameToInt("WFC")];
 		if((int)Math.ceil(XLFmid) != (int)Math.floor(XLFmid)){
-			to_exchange.println("ADD " + identifier + " XLF SELL " + ((int)Math.ceil(XLFmid)+10) + " " + 2);
+			to_exchange.println("ADD " + identifier + " XLF SELL " + ((int)Math.ceil(XLFmid)+13) + " " + 2);
 			identifier++;
-			to_exchange.println("ADD " + identifier + " XLF BUY " + ((int)Math.floor(XLFmid)-10) + " " +  2);
+			to_exchange.println("ADD " + identifier + " XLF BUY " + ((int)Math.floor(XLFmid)-1) + " " +  2);
 			identifier++;
 		}
 		// Pennypinching or GS MS WFC
